@@ -1,0 +1,58 @@
+on:
+  push:
+    branches:
+      - develop
+name: Deployment | Sonarqube
+
+jobs:
+  build and deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: npm install
+      - name: Install npm
+        run: npm install --prefix ./functions
+      - name: Build
+        run: npm run build:ssr-firebase
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  sonar_analyze:
+    name: Sonarqube Analysis
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ::set-env name=HOME::$HOME
+      shell: bash
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - run: npm install -g @angular/cli
+    - run: npm install -g sonar-scanner
+    - run: npm install
+    - run: ng build
+    
+    #- run: ng test
+    - name: Sonar
+      run: |-
+        sonar-scanner \
+        -Dsonar.projectKey=gintaa-angular-web \
+        -Dsonar.branch.name=${GITHUB_REF#refs/heads/} \
+        -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }} \
+        -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
