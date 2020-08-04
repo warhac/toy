@@ -1,5 +1,13 @@
-name-template: 'v$RESOLVED_VERSION 🌈'
-tag-template: 'v$RESOLVED_VERSION'
+branches:
+  - master
+
+#name-template: 'v$RESOLVED_VERSION 🌈'
+#tag-template: 'v$RESOLVED_VERSION'
+
+name-template: $NEXT_MINOR_VERSION
+
+tag-template: $NEXT_MINOR_VERSION
+
 categories:
   - title: '🚀 Features'
     labels:
@@ -12,7 +20,9 @@ categories:
       - 'bug'
   - title: '🧰 Maintenance'
     label: 'chore'
+    
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+
 version-resolver:
   major:
     labels:
@@ -24,7 +34,10 @@ version-resolver:
     labels:
       - 'patch'
   default: patch
+
 template: |
   ## Changes
 
   $CHANGES
+
+  __Thanks to contributors for this release:__ $CONTRIBUTORS
