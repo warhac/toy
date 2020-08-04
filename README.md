@@ -5,6 +5,7 @@
 - two
 - three
 - bug1
+- bug2
 
 ### Project Overview
 
