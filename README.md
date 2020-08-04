@@ -4,6 +4,7 @@
 - one
 - two
 - three
+- bug1
 
 ### Project Overview
 
