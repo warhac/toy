@@ -6,6 +6,7 @@
 - three
 - bug1
 - bug2
+- enhancement 2
 
 ### Project Overview
 
