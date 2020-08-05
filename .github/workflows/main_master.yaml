@@ -22,7 +22,8 @@ jobs:
           channel: '#gintaa-github'
           mention: 'here'
           if_mention: failure,cancelled
-          status: ${{ job.status }}
+          status: 'custom'
+          fields: workflow,job,commit,repo,ref,author,took
           custom_payload: |
             {
               username: 'action-slack',
@@ -33,52 +34,52 @@ jobs:
                 title: 'CI Result',
                 fields: [{
                   title: 'repo',
-                  value: `process.env.AS_REPO`,
+                  value: `${process.env.AS_REPO}`,
                   short: true
                 },
                 {
                   title: 'message',
-                  value: `process.env.AS_MESSAGE`,
+                  value: `${process.env.AS_MESSAGE}`,
                   short: true
                 },
                 {
                   title: 'commit',
-                  value: `process.env.AS_COMMIT`,
+                  value: `${process.env.AS_COMMIT}`,
                   short: false
                 },
                 {
                   title: 'author',
-                  value: `process.env.AS_AUTHOR`,
+                  value: `${process.env.AS_AUTHOR}`,
                   short: true
                 },
                 {
                   title: 'action',
-                  value: `process.env.AS_ACTION`,
+                  value: `${process.env.AS_ACTION}`,
                   short: false
                 },
                 {
                   title: 'job',
-                  value: `process.env.AS_JOB`,
+                  value: `${process.env.AS_JOB}`,
                   short: true
                 },
                 {
                   title: 'took',
-                  value: `process.env.AS_TOOK`,
+                  value: `${process.env.AS_TOOK}`,
                   short: false
                 },
                 {
                   title: 'eventName',
-                  value: `process.env.AS_EVENT_NAME`,
+                  value: `${process.env.AS_EVENT_NAME}`,
                   short: true
                 },
                 {
                   title: 'ref',
-                  value: `process.env.AS_REF`,
+                  value: `${process.env.AS_REF}`,
                   short: false
                 },
                 {
                   title: 'workflow',
-                  value: `process.env.AS_WORKFLOW`,
+                  value: `${process.env.AS_WORKFLOW}`,
                   short: false
                 }]
               }]
@@ -101,7 +102,8 @@ jobs:
           channel: '#general'
           mention: 'here'
           if_mention: failure,cancelled
-          status: ${{ job.status }}
+          status: 'custom'
+          fields: workflow,job,commit,repo,ref,author,took
           custom_payload: |
             {
               username: 'action-slack',
