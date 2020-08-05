@@ -16,7 +16,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          #NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Notify Slack
         uses: 8398a7/action-slack@v3
         with:
