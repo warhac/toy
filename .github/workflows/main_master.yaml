@@ -7,7 +7,7 @@ name: Release
 
 jobs:
   semantic_release:
-    name: Deploy
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -15,7 +15,9 @@ jobs:
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: ${{ secrets.RELEASE_USER }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           #NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Notify Slack
         uses: 8398a7/action-slack@v3
