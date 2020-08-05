@@ -23,8 +23,7 @@ jobs:
           mention: 'here'
           if_mention: failure,cancelled
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow
-          text: '${{ job.status }}' === 'succes' ? ':rocket: Released!' : '${{ job.status }}' === 'failure' ? ':boom: Failed!!!' : ':warning: Warned!!'
+          fields: repo,message,commit,author,action,eventName,ref,workflo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -45,7 +44,6 @@ jobs:
           if_mention: failure,cancelled
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow
-          text: '${{ job.status }}' === 'succes' ? ':rocket: Released!' : '${{ job.status }}' === 'failure' ? ':boom: Failed!!!' : ':warning: Warned!!'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
