@@ -17,73 +17,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Notify Slack
-        uses: 8398a7/action-slack@v3
+        #uses: 8398a7/action-slack@v3
+        uses: asconsoft/action-slack@v4.0.0
         with:
-          channel: '#gintaa-github'
+          channel: '#test'
           mention: 'here'
           if_mention: failure,cancelled
-          status: 'custom'
+          status: ${{ job.status }}
           fields: workflow,job,commit,repo,ref,author,took
-          custom_payload: |
-            {
-              username: 'action-slack',
-              icon_emoji: ':octocat:',
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: '${{ job.status }}' === 'success' ? ':rocket: Released!' : '${{ job.status }}' === 'failure' ? ':boom: Failed!!!' : ':warning: Warned!!',
-                title: 'CI Result',
-                fields: [{
-                  title: 'repo',
-                  value: `${process.env.AS_REPO}`,
-                  short: true
-                },
-                {
-                  title: 'message',
-                  value: `${process.env.AS_MESSAGE}`,
-                  short: true
-                },
-                {
-                  title: 'commit',
-                  value: `${process.env.AS_COMMIT}`,
-                  short: false
-                },
-                {
-                  title: 'author',
-                  value: `${process.env.AS_AUTHOR}`,
-                  short: true
-                },
-                {
-                  title: 'action',
-                  value: `${process.env.AS_ACTION}`,
-                  short: false
-                },
-                {
-                  title: 'job',
-                  value: `${process.env.AS_JOB}`,
-                  short: true
-                },
-                {
-                  title: 'took',
-                  value: `${process.env.AS_TOOK}`,
-                  short: false
-                },
-                {
-                  title: 'eventName',
-                  value: `${process.env.AS_EVENT_NAME}`,
-                  short: true
-                },
-                {
-                  title: 'ref',
-                  value: `${process.env.AS_REF}`,
-                  short: false
-                },
-                {
-                  title: 'workflow',
-                  value: `${process.env.AS_WORKFLOW}`,
-                  short: false
-                }]
-              }]
-            }
+          text_success: 'Success'
+          text_failure: 'Failure'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -99,71 +42,11 @@ jobs:
       - name: Notify Slack
         uses: 8398a7/action-slack@v3
         with:
-          channel: '#general'
+          channel: '#test'
           mention: 'here'
           if_mention: failure,cancelled
-          status: 'custom'
+          status: ${{ job.status }}
           fields: workflow,job,commit,repo,ref,author,took
-          custom_payload: |
-            {
-              username: 'action-slack',
-              icon_emoji: ':octocat:',
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: '${{ job.status }}' === 'success' ? ':shipit: https://asconsoftech.com' : '${{ job.status }}' === 'failure' ? ':boom: Failed!!!' : ':warning: Warned!!',
-                title: 'CI Result',
-                fields: [{
-                  title: 'repo',
-                  value: `process.env.AS_REPO`,
-                  short: true
-                },
-                {
-                  title: 'message',
-                  value: `process.env.AS_MESSAGE`,
-                  short: true
-                },
-                {
-                  title: 'commit',
-                  value: `process.env.AS_COMMIT`,
-                  short: false
-                },
-                {
-                  title: 'author'
-                  value: `process.env.AS_AUTHOR`,
-                  short: true
-                },
-                {
-                  title: 'action',
-                  value: `process.env.AS_ACTION`,
-                  short: false
-                },
-                {
-                  title: 'job',
-                  value: `process.env.AS_JOB`,
-                  short: true
-                },
-                {
-                  title: 'took',
-                  value: `process.env.AS_TOOK`,
-                  short: false
-                },
-                {
-                  title: 'eventName',
-                  value: `process.env.AS_EVENT_NAME`,
-                  short: true
-                },
-                {
-                  title: 'ref',
-                  value: `process.env.AS_REF`,
-                  short: false
-                },
-                {
-                  title: 'workflow',
-                  value: `process.env.AS_WORKFLOW`,
-                  short: false
-                }]
-              }]
-            }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
