@@ -1,0 +1,53 @@
+  on:
+  push:
+    branches:
+      - master
+
+name: Release | Deploy
+
+jobs:
+  semantic_release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Notify Slack
+        #uses: 8398a7/action-slack@v3
+        uses: asconsoft/action-slack@v4.0.1
+        with:
+          channel: '#test'
+          mention: 'here'
+          if_mention: failure,cancelled
+          status: ${{ job.status }}
+          fields: workflow,job,commit,repo,ref,author,took
+          text_success: 'Success'
+          text_failure: 'Failure'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
+  firebase_deploy:
+    name: Firebase Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Deploy to Firebase
+        run: echo "Deploy to firebase"
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          channel: '#test'
+          mention: 'here'
+          if_mention: failure,cancelled
+          status: ${{ job.status }}
+          fields: workflow,job,commit,repo,ref,author,took
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
