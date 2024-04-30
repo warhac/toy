@@ -1,0 +1,3 @@
+[submodule "toy"]
+	path = toy
+	url = https://github.com/warhac/toy.git
